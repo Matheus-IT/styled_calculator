@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:styled_calculator/widgets/round_card.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -8,79 +9,39 @@ class MainScreen extends StatelessWidget {
           title: const Text('IMC calculator'),
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
               flex: 1,
               child: Row(
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      color: Colors.amber,
-                      child: Container(
-                        height: double.infinity,
-                        child: Text('Hello'),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      color: Color.fromARGB(255, 255, 145, 72),
-                      child: Container(
-                        height: double.infinity,
-                        child: Text('Hello'),
-                      ),
-                    ),
-                  )
+                  Expanded(flex: 1, child: RoundCard()),
+                  Expanded(flex: 1, child: RoundCard())
                 ],
               ),
             ),
             Expanded(
               flex: 1,
               child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      color: Color.fromARGB(255, 255, 211, 79),
-                      child: Container(
-                        height: double.infinity,
-                        child: Text('Hello'),
-                      ),
-                    ),
-                  )
-                ],
+                children: [Expanded(flex: 1, child: RoundCard())],
               ),
             ),
             Expanded(
               flex: 1,
               child: Row(
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      color: Color.fromARGB(255, 255, 235, 175),
-                      child: Container(
-                        height: double.infinity,
-                        child: Text('Hello'),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      color: Color.fromARGB(255, 255, 168, 86),
-                      child: Container(
-                        height: double.infinity,
-                        child: Text('Hello'),
-                      ),
-                    ),
-                  )
+                  Expanded(flex: 1, child: RoundCard()),
+                  Expanded(flex: 1, child: RoundCard())
                 ],
               ),
             ),
-            TextButton(onPressed: () {}, child: Text('Calcular'))
+            TextButton(
+              onPressed: () {},
+              child: Text('Calcular'),
+              style: TextButton.styleFrom(
+                backgroundColor: const Color(0xff8d8e98),
+              ),
+            )
           ],
         ));
   }
