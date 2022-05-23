@@ -12,9 +12,6 @@ class BMIApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'IMC calculator',
-      theme: ThemeData(
-        primaryColor: Color(0xff0a0e21),
-      ),
       home: MainScreen(),
     );
   }
