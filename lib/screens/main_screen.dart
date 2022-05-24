@@ -26,22 +26,42 @@ class _MainScreenState extends State<MainScreen> {
             Expanded(
               flex: 1,
               child: Row(
-                children: const [
+                children: [
                   Expanded(
                     flex: 1,
-                    child: RoundCard(
-                      child: CardContent(
-                        iconData: FontAwesomeIcons.mars,
-                        label: 'HOMEM',
+                    child: GestureDetector(
+                      onTap: () {
+                        if (gender == Gender.female) {
+                          setState(() {
+                            gender = Gender.male;
+                          });
+                        }
+                      },
+                      child: RoundCard(
+                        selected: gender == Gender.male,
+                        child: const CardContent(
+                          iconData: FontAwesomeIcons.mars,
+                          label: 'HOMEM',
+                        ),
                       ),
                     ),
                   ),
                   Expanded(
                     flex: 1,
-                    child: RoundCard(
-                      child: CardContent(
-                        iconData: FontAwesomeIcons.venus,
-                        label: 'MULHER',
+                    child: GestureDetector(
+                      onTap: () {
+                        if (gender == Gender.male) {
+                          setState(() {
+                            gender = Gender.female;
+                          });
+                        }
+                      },
+                      child: RoundCard(
+                        selected: gender == Gender.female,
+                        child: const CardContent(
+                          iconData: FontAwesomeIcons.venus,
+                          label: 'MULHER',
+                        ),
                       ),
                     ),
                   ),

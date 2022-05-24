@@ -3,17 +3,17 @@ import 'package:styled_calculator/consts/colors.dart';
 
 class RoundCard extends StatelessWidget {
   final Widget? child;
-  final bool enabled;
+  final bool selected;
 
   const RoundCard({
     Key? key,
     this.child,
-    this.enabled = true,
+    this.selected = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final color = enabled ? enabledColor : disabledColor;
+    final color = selected ? selectedColor : unselectedColor;
 
     return Container(
       height: double.infinity,
