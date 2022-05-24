@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:styled_calculator/consts/colors.dart';
 import 'package:styled_calculator/widgets/card_content.dart';
 import 'package:styled_calculator/widgets/round_card.dart';
 
-class MainScreen extends StatelessWidget {
+enum Gender { male, female }
+
+class MainScreen extends StatefulWidget {
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  Gender gender = Gender.male;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +67,7 @@ class MainScreen extends StatelessWidget {
               onPressed: () {},
               child: const Text('Calcular'),
               style: TextButton.styleFrom(
-                backgroundColor: const Color(0xff8d8e98),
+                backgroundColor: buttonBackgroundColor,
               ),
             )
           ],
