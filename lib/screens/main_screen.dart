@@ -13,6 +13,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   Gender gender = Gender.male;
+  int height = 175;
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +71,46 @@ class _MainScreenState extends State<MainScreen> {
             ),
             Expanded(
               flex: 1,
-              child: Row(
-                children: const [Expanded(flex: 1, child: RoundCard())],
+              child: RoundCard(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('Altura'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          height.toString(),
+                          style: const TextStyle(
+                            fontSize: 50.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Text('cm'),
+                      ],
+                    ),
+                    SliderTheme(
+                      data: const SliderThemeData(
+                        thumbColor: accentColor,
+                        thumbShape:
+                            RoundSliderThumbShape(enabledThumbRadius: 15),
+                      ),
+                      child: Slider(
+                        min: 100.0,
+                        max: 220.0,
+                        activeColor: white,
+                        value: height.toDouble(),
+                        onChanged: (double value) {
+                          debugPrint(value.toString());
+                          setState(() => height = value.toInt());
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
