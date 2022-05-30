@@ -14,8 +14,8 @@ class BMIApp extends StatelessWidget {
     return MaterialApp(
       title: 'IMC calculator',
       theme: ThemeData.dark().copyWith(
-        primaryColor: primaryColor,
-        scaffoldBackgroundColor: darkColor,
+        primaryColor: kActiveCardColor,
+        scaffoldBackgroundColor: kInactiveCardColor,
       ),
       home: MainScreen(),
     );

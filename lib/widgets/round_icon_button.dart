@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../consts/colors.dart';
 
@@ -17,13 +16,13 @@ class RoundIconButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         shape: const CircleBorder(),
         padding: const EdgeInsets.all(20),
-        primary: buttonColor,
-        onPrimary: buttonSplashColor,
-        minimumSize: roundButtonRadius,
+        primary: kButtonColor,
+        onPrimary: kButtonColor,
+        minimumSize: const Size.fromRadius(20.0),
       ),
       child: Icon(
         icon,
-        color: white,
+        color: kSliderActiveColor,
       ),
     );
   }

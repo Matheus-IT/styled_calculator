@@ -13,7 +13,7 @@ class RoundCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = selected ? selectedColor : unselectedColor;
+    final color = selected ? kSelectedColor : kUnselectedColor;
 
     return Container(
       height: double.infinity,
