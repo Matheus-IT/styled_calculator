@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:styled_calculator/consts/colors.dart';
+import 'package:styled_calculator/consts/tipography.dart';
 import 'package:styled_calculator/widgets/card_content.dart';
 import 'package:styled_calculator/widgets/round_card.dart';
+
+import '../widgets/round_icon_button.dart';
 
 enum Gender { male, female }
 
@@ -14,6 +17,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   Gender gender = Gender.male;
   int height = 175;
+  int weight = 65;
+  int age = 25;
 
   @override
   Widget build(BuildContext context) {
@@ -116,16 +121,76 @@ class _MainScreenState extends State<MainScreen> {
             Expanded(
               flex: 1,
               child: Row(
-                children: const [
-                  Expanded(flex: 1, child: RoundCard()),
-                  Expanded(flex: 1, child: RoundCard())
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: RoundCard(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Peso'),
+                          Text(weight.toString(), style: bigFontStyle),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RoundIconButton(
+                                icon: FontAwesomeIcons.minus,
+                                onPressed: () {
+                                  setState(() => {if (weight > 1) weight--});
+                                },
+                              ),
+                              RoundIconButton(
+                                icon: FontAwesomeIcons.plus,
+                                onPressed: () {
+                                  setState(() => {if (weight > 1) weight++});
+                                },
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: RoundCard(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Idade'),
+                          Text(age.toString(), style: bigFontStyle),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RoundIconButton(
+                                icon: FontAwesomeIcons.minus,
+                                onPressed: () {
+                                  setState(() => {if (age > 1) age--});
+                                },
+                              ),
+                              RoundIconButton(
+                                icon: FontAwesomeIcons.plus,
+                                onPressed: () {
+                                  setState(() => {if (age > 1) age++});
+                                },
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
             TextButton(
               onPressed: () {},
-              child: const Text('Calcular'),
+              child: const Text(
+                'Calcular',
+                style: TextStyle(color: buttonActiveColor),
+              ),
               style: TextButton.styleFrom(
+                fixedSize: const Size.fromHeight(50.0),
                 backgroundColor: buttonBackgroundColor,
               ),
             )
