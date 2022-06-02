@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:styled_calculator/consts/colors.dart';
-import 'package:styled_calculator/screens/main_screen.dart';
+
+import '../consts.dart';
+import './screens/main_screen.dart';
 
 void main() {
   runApp(const BMIApp());
@@ -12,10 +13,11 @@ class BMIApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'IMC calculator',
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
       theme: ThemeData.dark().copyWith(
-        primaryColor: kActiveCardColor,
-        scaffoldBackgroundColor: kInactiveCardColor,
+        primaryColor: kUnselectedColor,
+        scaffoldBackgroundColor: kSelectedColor,
       ),
       home: MainScreen(),
     );

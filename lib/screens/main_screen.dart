@@ -1,13 +1,16 @@
+import 'package:bmi_calculator/widgets/icon_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:styled_calculator/consts/colors.dart';
-import 'package:styled_calculator/consts/typography.dart';
-import 'package:styled_calculator/widgets/card_content.dart';
-import 'package:styled_calculator/widgets/round_card.dart';
 
+import '../consts.dart';
+import '../widgets/round_card.dart';
 import '../widgets/round_icon_button.dart';
+import './result_screen.dart';
 
-enum Gender { male, female }
+enum Gender {
+  male,
+  female,
+}
 
 class MainScreen extends StatefulWidget {
   @override
@@ -15,12 +18,12 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  Gender gender = Gender.male;
-  int height = 175;
-  int weight = 65;
+  Gender gender = Gender.female;
+  int height = 170;
+  int weight = 55;
   int age = 25;
 
-  Map<String, String> weightAnalysis() {
+  Map<String, String> _bmiAnalysis() {
     final mh = height / 100.0;
     final bmi = weight / (mh * mh);
     String diagnosis;
@@ -52,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     return {
-      'bmi': bmi.toString(),
+      'bmi': bmi.toStringAsFixed(1).replaceAll(RegExp(r'\.'), ','),
       'diagnosis': diagnosis,
       'comment': comment,
     };
@@ -61,181 +64,222 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('IMC calculator'),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 1,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        if (gender == Gender.female) {
-                          setState(() {
-                            gender = Gender.male;
-                          });
-                        }
-                      },
-                      child: RoundCard(
-                        selected: gender == Gender.male,
-                        child: const CardContent(
-                          iconData: FontAwesomeIcons.mars,
-                          label: 'HOMEM',
-                        ),
+      appBar: AppBar(
+        title: const Text('Calculadora IMC'),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 1,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (gender == Gender.female) {
+                        setState(() {
+                          gender = Gender.male;
+                        });
+                      }
+
+                      debugPrint(gender == Gender.male ? 'MALE' : 'FEMALE');
+                    },
+                    child: RoundCard(
+                      selected: gender == Gender.male,
+                      child: const IconText(
+                        icon: FontAwesomeIcons.mars,
+                        label: 'HOMEM',
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        if (gender == Gender.male) {
-                          setState(() {
-                            gender = Gender.female;
-                          });
-                        }
-                      },
-                      child: RoundCard(
-                        selected: gender == Gender.female,
-                        child: const CardContent(
-                          iconData: FontAwesomeIcons.venus,
-                          label: 'MULHER',
-                        ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (gender == Gender.male) {
+                        setState(() {
+                          gender = Gender.female;
+                        });
+                      }
+                      debugPrint(gender == Gender.male ? 'MALE' : 'FEMALE');
+                    },
+                    child: RoundCard(
+                      selected: gender == Gender.female,
+                      child: const IconText(
+                        icon: FontAwesomeIcons.venus,
+                        label: 'MULHER',
                       ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: RoundCard(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text('ALTURA'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        height.toString(),
+                        style: kBigFontStyle,
+                      ),
+                      const Text('cm'),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: const SliderThemeData(
+                      thumbShape: RoundSliderThumbShape(
+                        enabledThumbRadius: 15.0,
+                      ),
+                      overlayShape: RoundSliderOverlayShape(
+                        overlayRadius: 25.0,
+                      ),
+                    ),
+                    child: Slider(
+                      min: 100.0,
+                      max: 220.0,
+                      value: height.toDouble(),
+                      activeColor: kSliderActiveColor,
+                      inactiveColor: kSliderInactiveColor,
+                      thumbColor: kSliderThumbColor,
+                      onChanged: (double value) {
+                        setState(() {
+                          height = value.toInt();
+                        });
+                        //debugPrint('VALUE: $value / HEIGHT: $height');
+                      },
                     ),
                   ),
                 ],
               ),
             ),
-            Expanded(
-              flex: 1,
-              child: RoundCard(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Altura'),
-                    Row(
+          ),
+          Expanded(
+            flex: 1,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: RoundCard(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
                       children: [
+                        const Text('PESO'),
                         Text(
-                          height.toString(),
-                          style: const TextStyle(
-                            fontSize: 50.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          weight.toString(),
+                          style: kBigFontStyle,
                         ),
-                        const Text('cm'),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () {
+                                if (weight > 1) {
+                                  setState(() {
+                                    weight--;
+                                  });
+                                }
+                              },
+                            ),
+                            const SizedBox(
+                              width: 15.0,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPressed: () {
+                                if (weight < 300) {
+                                  setState(() {
+                                    weight++;
+                                  });
+                                }
+                              },
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                    SliderTheme(
-                      data: const SliderThemeData(
-                        thumbColor: kSliderThumbColor,
-                        thumbShape:
-                            RoundSliderThumbShape(enabledThumbRadius: 15),
-                      ),
-                      child: Slider(
-                        min: 100.0,
-                        max: 220.0,
-                        activeColor: kSliderActiveColor,
-                        value: height.toDouble(),
-                        onChanged: (double value) {
-                          debugPrint(value.toString());
-                          setState(() => height = value.toInt());
-                        },
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: RoundCard(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Peso'),
-                          Text(weight.toString(), style: kBigFontStyle),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              RoundIconButton(
-                                icon: FontAwesomeIcons.minus,
-                                onPressed: () {
-                                  setState(() => {if (weight > 1) weight--});
-                                },
-                              ),
-                              RoundIconButton(
-                                icon: FontAwesomeIcons.plus,
-                                onPressed: () {
-                                  setState(() => {if (weight > 1) weight++});
-                                },
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
+                Expanded(
+                  flex: 1,
+                  child: RoundCard(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('IDADE'),
+                        Text(
+                          age.toString(),
+                          style: kBigFontStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () {
+                                if (age > 1) {
+                                  setState(() {
+                                    age--;
+                                  });
+                                }
+                              },
+                            ),
+                            const SizedBox(
+                              width: 15.0,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPressed: () {
+                                if (age < 150) {
+                                  setState(() {
+                                    age++;
+                                  });
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: RoundCard(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Idade'),
-                          Text(age.toString(), style: kBigFontStyle),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              RoundIconButton(
-                                icon: FontAwesomeIcons.minus,
-                                onPressed: () {
-                                  setState(() => {if (age > 1) age--});
-                                },
-                              ),
-                              RoundIconButton(
-                                icon: FontAwesomeIcons.plus,
-                                onPressed: () {
-                                  setState(() => {if (age > 1) age++});
-                                },
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 6),
-              child: TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Calcular',
-                  style: TextStyle(color: kButtonActiveColor),
-                ),
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.all(16),
-                  backgroundColor: kButtonBackgroundColor,
-                ),
-              ),
-            )
-          ],
-        ));
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                final Map<String, String> result = _bmiAnalysis();
+
+                return ResultScreen(
+                  diagnosis: result['diagnosis']!,
+                  bmi: result['bmi']!,
+                  comment: result['comment']!,
+                );
+              }));
+            },
+            style: TextButton.styleFrom(
+              fixedSize: kButtonSize,
+              primary: kButtonActiveColor,
+              backgroundColor: kButtonColor,
+            ),
+            child: const Text('CALCULAR'),
+          ),
+        ],
+      ),
+    );
   }
 }

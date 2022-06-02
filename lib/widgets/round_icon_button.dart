@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 
-import '../consts/colors.dart';
+import '../consts.dart';
 
 class RoundIconButton extends StatelessWidget {
   final IconData icon;
   final void Function()? onPressed;
 
-  const RoundIconButton({Key? key, required this.icon, this.onPressed})
-      : super(key: key);
+  const RoundIconButton({required this.icon, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
+        minimumSize: const Size.fromRadius(kRoundButtonRadius),
         shape: const CircleBorder(),
-        padding: const EdgeInsets.all(20),
-        primary: kButtonColor,
-        onPrimary: kButtonColor,
-        minimumSize: const Size.fromRadius(20.0),
+        padding: const EdgeInsets.all(5.0),
+        primary: kRoundButtonColor,
+        onPrimary: kRoundButtonSplashColor,
       ),
       child: Icon(
         icon,
-        color: kSliderActiveColor,
+        color: Colors.white,
       ),
     );
   }
